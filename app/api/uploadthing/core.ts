@@ -9,10 +9,6 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f({
     image: {
-      /**
-       * For full list of options and defaults, see the File Route API reference
-       * @see https://docs.uploadthing.com/file-routes#route-config
-       */
       maxFileSize: "4MB",
       maxFileCount: 5,
     },
@@ -35,7 +31,6 @@ export const ourFileRouter = {
 
       console.log("file url", file.url);
 
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };
     }),
 
@@ -58,7 +53,6 @@ export const ourFileRouter = {
 
       console.log("file url", file.url);
 
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
