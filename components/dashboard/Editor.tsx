@@ -78,6 +78,7 @@ export function TipTapEditor() {
         class: "focus:outline-none min-h-[200px] prose prose-sm sm:prose-base",
       },
     },
+    immediatelyRender: false,
   });
 
   return (

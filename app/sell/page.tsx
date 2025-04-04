@@ -1,9 +1,15 @@
 import { TipTapEditor } from "@/components/dashboard/Editor";
 import SelectCategory from "@/components/dashboard/SelectCategory";
 import {
+  UploadthingFileUpload,
+  UploadthingImageUpload,
+} from "@/components/dashboard/UploadthingButton";
+import { Button } from "@/components/ui/button";
+import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -55,7 +61,7 @@ export default function SellRoute() {
               <Label className="md:text-base">Small Summary</Label>
               <Textarea
                 placeholder="Please describe your product shortly right here.."
-                className="w-full min-h-[100px]"
+                className="min-h-[100px] w-full"
               />
             </div>
 
@@ -64,7 +70,22 @@ export default function SellRoute() {
               <Label className="md:text-base">Description</Label>
               <TipTapEditor />
             </div>
+
+            {/* Full Product Description */}
+            <div className="flex flex-col gap-y-2">
+              <Label className="md:text-base">Product Images </Label>
+              <UploadthingImageUpload />
+            </div>
+
+            <div className="flex flex-col gap-y-2 border-b-1">
+              <Label className="md:text-base">Product File </Label>
+              <UploadthingFileUpload />
+            </div>
           </CardContent>
+
+          <CardFooter className="mt-6">
+            <Button>Submit form</Button>
+          </CardFooter>
         </form>
       </Card>
     </section>

@@ -10,6 +10,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import UserNav from "./UserNav";
+import { ModeToggle } from "../ModeToggle";
 
 export default async function Navbar() {
   const { getUser } = getKindeServerSession();
@@ -30,6 +31,8 @@ export default async function Navbar() {
       <NavbarLinks />
 
       <div className="flex gap-x-2 md:col-span-3 md:items-center md:justify-end md:gap-x-2">
+        <ModeToggle />
+
         {/* Desktop Authentication Buttons */}
         <div className="flex gap-x-2">
           {user ? (
@@ -41,7 +44,7 @@ export default async function Navbar() {
               }
             />
           ) : (
-            <div>
+            <div className="flex gap-2">
               <Button asChild>
                 <LoginLink>Login</LoginLink>
               </Button>
