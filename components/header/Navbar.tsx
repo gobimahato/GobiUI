@@ -29,31 +29,33 @@ export default async function Navbar() {
       {/* Navigation Links */}
       <NavbarLinks />
 
-      {/* Desktop Authentication Buttons */}
-      <div className="hidden md:col-span-3 md:flex md:items-center md:justify-end md:gap-x-2">
-        {user ? (
-          <UserNav
-            email={user.email as string}
-            name={user.given_name as string}
-            userImage={
-              user.picture ?? `https://avatar.vercel.sh/${user.given_name}`
-            }
-          />
-        ) : (
-          <div>
-            <Button asChild>
-              <LoginLink>Login</LoginLink>
-            </Button>
-            <Button variant="secondary" asChild>
-              <RegisterLink>Register</RegisterLink>
-            </Button>
-          </div>
-        )}
-      </div>
+      <div className="flex gap-x-2 md:col-span-3 md:items-center md:justify-end md:gap-x-2">
+        {/* Desktop Authentication Buttons */}
+        <div className="flex gap-x-2">
+          {user ? (
+            <UserNav
+              email={user.email as string}
+              name={user.given_name as string}
+              userImage={
+                user.picture ?? `https://avatar.vercel.sh/${user.given_name}`
+              }
+            />
+          ) : (
+            <div>
+              <Button asChild>
+                <LoginLink>Login</LoginLink>
+              </Button>
+              <Button variant="secondary" asChild>
+                <RegisterLink>Register</RegisterLink>
+              </Button>
+            </div>
+          )}
+        </div>
 
-      {/* Mobile Menu */}
-      <div className="md:hidden">
-        <MobileMenu />
+        {/* Mobile Menu */}
+        <div className="md:hidden">
+          <MobileMenu />
+        </div>
       </div>
     </nav>
   );

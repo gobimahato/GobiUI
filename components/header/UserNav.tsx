@@ -10,21 +10,30 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Link from "next/link";
 
-interface iAppProps {
-  email: string | undefined;
-  name: string;
-  userImage: string | undefined;
-}
+export default async function UserNav() {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
-export default function UserNav({ email, name, userImage }: iAppProps) {
-  const displayEmail = email || "No email provided";
-  const displayName = name || "User";
+  const firstName = user.given_name || "Guest";
+  const lastName = user.family_name || "";
+  const email = user.email || "No email provided";
+  const userImage = user.picture || "";
 
-  // avatar fallback name
+  // Capitalize the first letter of firstName and lastName
+  const capitalizeFirstLetter = (name: string) => {
+    if (!name) return "";
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  };
+
+  const capitalizedFirstName = capitalizeFirstLetter(firstName);
+  const capitalizedLastName = capitalizeFirstLetter(lastName);
+
+  // Avatar fallback initials (First two letters of First Name)
   const getInitials = () => {
-    if (!name || name.trim() === "") return "??";
-    return name.slice(0, 2).toUpperCase();
+    return capitalizedFirstName.slice(0, 2).toUpperCase();
   };
 
   return (
@@ -34,7 +43,7 @@ export default function UserNav({ email, name, userImage }: iAppProps) {
           <Avatar className="h-10 w-10">
             <AvatarImage
               src={userImage}
-              alt={`${displayName}'s profile picture`}
+              alt={`${capitalizedFirstName} ${capitalizedLastName}'s profile picture`}
               className="object-cover"
             />
             <AvatarFallback>{getInitials()}</AvatarFallback>
@@ -46,9 +55,11 @@ export default function UserNav({ email, name, userImage }: iAppProps) {
         {/* User Info */}
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-base leading-none font-medium">{displayName}</p>
+            <p className="text-base leading-none font-medium">
+              {capitalizedFirstName} {capitalizedLastName}
+            </p>
             <p className="text-muted-foreground text-sm leading-none">
-              {displayEmail}
+              {email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -57,10 +68,12 @@ export default function UserNav({ email, name, userImage }: iAppProps) {
 
         {/* Menu Items */}
         <DropdownMenuGroup>
-          <DropdownMenuItem>Item 1</DropdownMenuItem>
-          <DropdownMenuItem>Item 2</DropdownMenuItem>
-          <DropdownMenuItem>Item 2</DropdownMenuItem>
-          <DropdownMenuItem>Item 4</DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href="/sell">Sell your products</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Item 2</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Item 3</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">Item 4</DropdownMenuItem>
         </DropdownMenuGroup>
 
         <DropdownMenuSeparator />

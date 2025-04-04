@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +23,7 @@ export default function MobileMenu() {
       {/* Menu Button */}
       <SheetTrigger asChild>
         <Button variant="outline" size="icon">
-          <Menu className="h-4 w-4" />
+          <Menu className="h-5 w-5" />
         </Button>
       </SheetTrigger>
 
@@ -51,18 +51,6 @@ export default function MobileMenu() {
             </Link>
           ))}
         </nav>
-
-        {/* Authentication Buttons */}
-        <div className="px-4 pt-4">
-          <div className="flex gap-2">
-            <Button size="sm" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/register">Register</Link>
-            </Button>
-          </div>
-        </div>
       </SheetContent>
     </Sheet>
   );
