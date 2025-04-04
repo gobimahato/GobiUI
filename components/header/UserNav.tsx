@@ -13,14 +13,24 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 
-export default async function UserNav() {
+interface UserNavProps {
+  email: string;
+  name: string;
+  userImage: string | undefined;
+}
+
+export default async function UserNav({
+  email,
+  name,
+  userImage,
+}: UserNavProps) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
   const firstName = user.given_name || "Guest";
   const lastName = user.family_name || "";
-  const email = user.email || "No email provided";
-  const userImage = user.picture || "";
+  const userEmail = user.email || "No email provided";
+  const userPicture = user.picture || "";
 
   // Capitalize the first letter of firstName and lastName
   const capitalizeFirstLetter = (name: string) => {
@@ -42,7 +52,7 @@ export default async function UserNav() {
         <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
           <Avatar className="h-10 w-10">
             <AvatarImage
-              src={userImage}
+              src={userPicture}
               alt={`${capitalizedFirstName} ${capitalizedLastName}'s profile picture`}
               className="object-cover"
             />
@@ -59,7 +69,7 @@ export default async function UserNav() {
               {capitalizedFirstName} {capitalizedLastName}
             </p>
             <p className="text-muted-foreground text-sm leading-none">
-              {email}
+              {userEmail}
             </p>
           </div>
         </DropdownMenuLabel>
